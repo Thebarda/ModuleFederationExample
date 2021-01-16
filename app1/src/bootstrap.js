@@ -10,6 +10,7 @@ function App() {
   return (
     <>
       <h1>Hello from React component</h1>
+      <p>Count from App1: {count}</p>
       <ModuleErrorBoundary name="Counter">
         <React.Suspense fallback='Loading Counter...'>
           <Counter
