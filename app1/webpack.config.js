@@ -6,7 +6,8 @@ module.exports = {
   entry: './src/index',
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: [path.resolve(__dirname, '..', 'app3', 'dist'), path.resolve(__dirname, '..', 'app2', 'dist')],
+    watchContentBase: true,
     port: 3000,
     open: true,
     hot: true,

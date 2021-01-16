@@ -8,10 +8,9 @@ module.exports = {
     publicPath: "http://localhost:3001/", // Added this
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
     port: 3001,
-    open: true,
     hot: true,
+    writeToDisk: true,
   },
   module: {
     rules: [
