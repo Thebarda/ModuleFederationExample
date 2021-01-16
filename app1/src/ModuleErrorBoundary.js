@@ -11,7 +11,7 @@ class ModuleErrorBoundary extends React.Component {
   }
   render() {
     if (this.state.hasError) { 
-      return <h1>Module not found</h1>;
+      return <h1>{this.props.name} module not found</h1>;
     }
     return this.props.children;
   }
