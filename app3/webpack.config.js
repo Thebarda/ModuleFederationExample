@@ -33,7 +33,8 @@ module.exports = {
       library: { type: "var", name: "app3" },
       exposes: {
         // expose each component you want 
-        './CounterState': './src/components/CounterState',
+        './hooks/CounterState': './src/components/CounterState',
+        './hooks/Hello': './src/components/Hello',
       },
       shared: ['react', 'react-dom'],
     }),
