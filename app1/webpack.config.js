@@ -1,10 +1,14 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: './src/index',
-  mode: 'development',
+  mode: isDevelopment ? 'development' : 'production',
   devServer: {
     contentBase: [path.resolve(__dirname, '..', 'app3', 'dist'), path.resolve(__dirname, '..', 'app2', 'dist')],
     watchContentBase: true,
@@ -23,6 +27,9 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-react'],
+          plugins: [
+            isDevelopment && require.resolve('react-refresh/babel'),
+          ].filter(Boolean),
         },
       },
     ],
@@ -39,5 +46,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-  ],
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
 };
