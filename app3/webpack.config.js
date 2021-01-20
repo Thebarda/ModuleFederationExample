@@ -3,6 +3,7 @@ const path = require('path');
 const { ModuleFederationPlugin } = require('webpack').container;
 
 module.exports = {
+  mode: 'development',
   entry: './src/index',
   output: {
     publicPath: "http://localhost:3002/", // Added this
@@ -29,6 +30,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'app3',
       filename: 'remoteEntry.js',
+      library: { type: "var", name: "app3" },
       exposes: {
         // expose each component you want 
         './CounterState': './src/components/CounterState',
