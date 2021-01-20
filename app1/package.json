@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "sh ./setup.sh",
     "start": "webpack serve",
     "build": "webpack --mode production",
     "serve:build": "node serve.js"
