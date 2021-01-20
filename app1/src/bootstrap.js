@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import ModuleErrorBoundary from './ModuleErrorBoundary';
 
 const Counter = React.lazy(() => import('app2/Counter'));
-const CounterState = React.lazy(() => import('app3/CounterState'));
+const HookCounterState = React.lazy(() => import('app3/hooks/CounterState'));
+const HookHello = React.lazy(() => import('app3/hooks/Hello'));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,7 +23,12 @@ function App() {
       </ModuleErrorBoundary>
       <ModuleErrorBoundary name="Counter state">
         <React.Suspense fallback='Loading Counter state...'>
-          <CounterState />
+          <HookCounterState />
+        </React.Suspense>
+      </ModuleErrorBoundary>
+      <ModuleErrorBoundary name="Hello">
+        <React.Suspense fallback='Loading Hello...'>
+          <HookHello />
         </React.Suspense>
       </ModuleErrorBoundary>
     </>
