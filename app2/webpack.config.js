@@ -29,7 +29,6 @@ module.exports = {
       filename: 'remoteEntry.js',
       library: { type: "var", name: "app2" },
       exposes: {
-        // expose each component you want 
         './Counter': './src/components/Counter',
       },
       shared: ['react', 'react-dom'],

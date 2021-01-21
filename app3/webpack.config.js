@@ -32,7 +32,6 @@ module.exports = {
       filename: 'remoteEntry.js',
       library: { type: "var", name: "app3" },
       exposes: {
-        // expose each component you want 
         './hooks/CounterState': './src/components/CounterState',
         './hooks/Hello': './src/components/Hello',
       },
