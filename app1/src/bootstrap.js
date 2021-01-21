@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import ModuleErrorBoundary from './ModuleErrorBoundary';
-
-const Counter = React.lazy(() => import('app2/Counter'));
-const HookCounterState = React.lazy(() => import('app3/hooks/CounterState'));
-const HookHello = React.lazy(() => import('app3/hooks/Hello'));
+import MemoizedLoadHook from './hook/LoadHook';
 
 function App() {
   const [count, setCount] = useState(0);
+  const [showCounter, setShowCounter] = useState(false);
+  const [showCounterState, setShowCounterState] = useState(false);
+  const [gretting, setGretting] = useState(false);
   return (
     <>
       <h1>Hello from React component</h1>
+      <button onClick={() => setShowCounter((v) => !v)}>Show Counter</button>
+      <button onClick={() => setShowCounterState((v) => !v)}>Show Counter State</button>
+      <button onClick={() => setGretting((v) => !v)}>Gretting from module 3</button>
       <p>Count from App1: {count}</p>
-      <ModuleErrorBoundary name="Counter">
-        <React.Suspense fallback='Loading Counter...'>
-          <Counter
-            count={count}
-            onIncrement={() => setCount(count + 1)}
-            onDecrement={() => setCount(count - 1)}
-          />
-        </React.Suspense>
-      </ModuleErrorBoundary>
-      <ModuleErrorBoundary name="Counter state">
-        <React.Suspense fallback='Loading Counter state...'>
-          <HookCounterState />
-        </React.Suspense>
-      </ModuleErrorBoundary>
-      <ModuleErrorBoundary name="Hello">
-        <React.Suspense fallback='Loading Hello...'>
-          <HookHello />
-        </React.Suspense>
-      </ModuleErrorBoundary>
+      { showCounter && <MemoizedLoadHook
+        name="Counter"
+        count={count}
+        onIncrement={() => setCount(count + 1)}
+        onDecrement={() => setCount(count - 1)}
+      />}
+      {showCounterState && <MemoizedLoadHook name="Counter state" />}
+      {gretting && <MemoizedLoadHook name="hello" />}
     </>
   );
 }
