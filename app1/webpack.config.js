@@ -1,4 +1,5 @@
 const path = require('path');
+const chokidar = require('chokidar');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
@@ -12,12 +13,18 @@ module.exports = {
   entry: './src/index',
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
-    contentBase: [path.resolve(__dirname, '..', 'app3', 'dist'), path.resolve(__dirname, '..', 'app2', 'dist')],
-    watchContentBase: true,
     port: 3000,
     open: true,
     hot: true,
+    injectHot: true,
     overlay: false,
+    after: (app, server) => {
+      chokidar.watch(
+        [path.resolve(__dirname, '..', 'app3', 'dist'), path.resolve(__dirname, '..', 'app2', 'dist')]
+      ).on('all', () => {
+        server.sockWrite(server.sockets, 'content-changed');
+      });
+    }
   },
   output: {
     publicPath: "http://localhost:3000/",
