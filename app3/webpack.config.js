@@ -1,6 +1,7 @@
 const path = require('path');
 
 const { ModuleFederationPlugin } = require('webpack').container;
+const { MFLiveReloadPlugin } = require("@module-federation/fmr");
 
 module.exports = {
   mode: 'development',
@@ -27,10 +28,14 @@ module.exports = {
     ],
   },
   plugins: [
+    new MFLiveReloadPlugin({
+      port: 3002, // the port your app runs on
+      container: "app3", // the name of your app, must be unique
+    }),
     new ModuleFederationPlugin({
       name: 'app3',
       filename: 'remoteEntry.js',
-      library: { type: "var", name: "app3" },
+      library: { type: "umd", name: "app3" },
       exposes: {
         './hooks/CounterState': './src/components/CounterState',
         './hooks/Hello': './src/components/Hello',

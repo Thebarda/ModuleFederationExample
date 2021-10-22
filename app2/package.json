@@ -13,6 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
+    "@module-federation/fmr": "^0.0.7",
     "babel-loader": "^8.2.1",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.3.1",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-i18next": "^11.12.0"
   }
 }

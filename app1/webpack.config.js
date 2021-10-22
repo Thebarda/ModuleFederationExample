@@ -1,5 +1,3 @@
-const path = require('path');
-const chokidar = require('chokidar');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
@@ -7,27 +5,20 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV);
 
 module.exports = {
   entry: './src/index',
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
-    port: 3000,
+    port: 3003,
     open: true,
     hot: true,
     injectHot: true,
     overlay: false,
-    after: (app, server) => {
-      chokidar.watch(
-        [path.resolve(__dirname, '..', 'app3', 'dist'), path.resolve(__dirname, '..', 'app2', 'dist')]
-      ).on('all', () => {
-        server.sockWrite(server.sockets, 'content-changed');
-      });
-    }
   },
   output: {
-    publicPath: "http://localhost:3000/",
+    publicPath: "http://localhost:3003/",
   },
   module: {
     rules: [
@@ -47,11 +38,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'app1',
-      remotes: {
-        app2: "app2@http://localhost:3001/remoteEntry.js",
-        app3: "app3@http://localhost:3002/remoteEntry.js",
-      },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', 'react-i18next'],
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
