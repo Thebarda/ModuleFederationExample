@@ -2,26 +2,32 @@
 
 ## What is Module Federation?
 
-It is basically a JavaScript architecture. It allows a JavaScript application to dynamically load code from another application (a different Webpack build).
+It is basically a JavaScript architecture. It allows a JavaScript application to dynamically load code from another application (named "remote").
 
-Here we load a `Counter` component from `app2` to `app1`, `CounterState` component from `app3` to `app1` and we catch the error when the module is not found.
+```flow
+Component           Scope            Master application
 
-## Hos to run the app ?
+`Hello` ----------> `app3` ------------> `app1`
+                      ^             |
+                      |             |
+`CounterState` -------|             | 
+                                    |
+`Counter` --------> `app2` ---------|
+```
+
+## How to run the app ?
 
 ### Development
 
-- Go to app1 folder then `npm run setup` and `npm start`
+- Go to app1 folder then `npm start`
 - Go to app2 folder then `npm start`
 - Go to app3 folder then `npm start`
 
-Note: To enable watch content base on app1, the following files `app2/dist/remoteEntry.js` and `app3/dist/remoteEtry.js` have to be created.
+In development, `app2` and `app3` will create a server (`http://localgost:40001`) to enable the Live reloading in the `app1` thank to the webpack plugin `@module-federation/fmr`.
+`app1` will wait for the "Live Reload Server" to start before starting his own webpack dev server.
 
 ## Production
 
 - Go to app1 then `npm run build` and `npm run serve:build`
 - Go to app2 then `npm run build` and `npm run serve:build`
 - Go to app3 then `npm run build` and `npm run serve:build`
-
-## Example based from this repo
-
-[github.com/brandonvilla21/module-federation](http://github.com/brandonvilla21/module-federation)
