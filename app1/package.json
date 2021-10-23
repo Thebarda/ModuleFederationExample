@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "sh ./setup.sh",
     "start": "npx wait-on http://localhost:40001 && webpack serve",
     "build": "cross-env NODE_ENV='production' webpack --mode production",
     "serve:build": "node serve.js"
