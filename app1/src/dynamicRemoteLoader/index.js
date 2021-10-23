@@ -1,5 +1,4 @@
 import React from 'react';
-import { nanoid } from 'nanoid'
 
 import ModuleErrorBoundary from '../ModuleErrorBoundary';
 import loadComponent from './loadComponent';
@@ -15,7 +14,7 @@ const useDynamicLoadComponent = ({ url }) => {
     console.log(`Dynamic Script Loading: ${url}`);
 
     const element = document.createElement("script");
-    element.src = `${url}?id=${nanoid(3)}`;
+    element.src = url;
     element.type = "text/javascript";
     element.async = true;
 
