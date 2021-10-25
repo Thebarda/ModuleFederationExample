@@ -1,6 +1,8 @@
 const { ModuleFederationPlugin } = require('webpack').container;
 const { MFLiveReloadPlugin } = require("@module-federation/fmr");
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   mode: 'development',
   entry: './src/index',
@@ -25,18 +27,18 @@ module.exports = {
     ],
   },
   plugins: [
-    new MFLiveReloadPlugin({
-      port: 3001, // the port your app runs on
-      container: "app2", // the name of your app, must be unique
-    }),
     new ModuleFederationPlugin({
       name: 'app2',
       filename: 'remoteEntry.js',
-      library: { type: "umd", name: "app2" },
+      library: { type: "var", name: "app2" },
       exposes: {
         './Counter': './src/components/Counter',
       },
       shared: ['react', 'react-dom', 'react-i18next'],
     }),
-  ],
+    isDevelopment && new MFLiveReloadPlugin({
+      port: 3001, // the port your app runs on
+      container: "app2", // the name of your app, must be unique
+    }),
+  ].filter(Boolean),
 };

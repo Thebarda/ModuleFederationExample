@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function Counter() {
+function CounterState() {
   const [count, setCount] = React.useState(0);
   return (
     <>
@@ -12,4 +12,4 @@ function Counter() {
   );
 }
 
-export default Counter
+export default CounterState;
