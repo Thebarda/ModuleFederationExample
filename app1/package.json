@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx wait-on http://localhost:40001 && webpack serve",
-    "build": "cross-env NODE_ENV='production' webpack --mode production",
+    "build": "rm -rf dist && cross-env NODE_ENV='production' webpack --mode production",
     "serve:build": "node serve.js"
   },
   "author": "",
@@ -27,6 +27,7 @@
   "dependencies": {
     "i18next": "^21.3.3",
     "nanoid": "^3.1.30",
+    "ramda": "^0.27.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.12.0"

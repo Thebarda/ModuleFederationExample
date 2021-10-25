@@ -15,7 +15,7 @@ function App() {
       <p>{t('Welcome to React')}</p>
       <p>Count from App1: {count}</p>
       <Remote
-        system={remotes[2]}
+        remote={remotes[2]}
       />
       <Remote remote={remotes[1]} count={count}
         onIncrement={() => setCount(count + 1)}

@@ -46,6 +46,20 @@ const useDynamicLoadComponent = ({ url }) => {
   };
 };
 
+const LoadComponent = ({ remote, ...props }) => {
+  const Component = React.useMemo(() => React.lazy(
+    loadComponent({ scope: remote.scope, module: remote.module })
+  ), [remote.module]);
+
+  return (
+    <ModuleErrorBoundary name={remote.module}>
+      <React.Suspense fallback={`Loading remote ${remote.module}`}>
+        <Component {...props} />
+      </React.Suspense>
+    </ModuleErrorBoundary>
+  );
+}
+
 export const Remote = ({ remote, ...props }) =>  {
   const { ready, failed } = useDynamicLoadComponent({
     url: remote?.url,
@@ -63,15 +77,5 @@ export const Remote = ({ remote, ...props }) =>  {
     return <h2>Failed to load dynamic script: {remote.url}</h2>;
   }
 
-  const Component = React.lazy(
-    loadComponent({ scope: remote.scope, module: remote.module })
-  );
-
-  return (
-    <ModuleErrorBoundary name={remote.module}>
-      <React.Suspense fallback={`Loading remote ${remote.module}`}>
-        <Component {...props} />
-      </React.Suspense>
-    </ModuleErrorBoundary>
-  );
+  return <LoadComponent remote={remote} {...props} />;
 }
